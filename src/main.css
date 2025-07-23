@@ -44,6 +44,10 @@ h2 {
   gap: 0.5rem;
 }
 
+.column-content[data-is-over="true"] {
+  background-color: #eeeeec;
+}
+
 .card {
   border: 1px solid #ebebeb;
   background: #fff;
