@@ -12,7 +12,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 type statusType = "to-do" | "in-progress" | "in-review" | "done";
 
 export interface TaskItem {
-  id: number;
+  id?: number;
   columnId?: number;
   name: string;
   description: string;
@@ -83,7 +83,7 @@ function Column({
   );
 }
 
-function Card({ name, description, id }: TaskItem) {
+function Card({ name, description, id = 0 }: TaskItem) {
   const { attributes, setNodeRef, listeners, transform } = useDraggable({
     id,
   });
@@ -168,7 +168,6 @@ function App() {
         name: taskName,
         description: taskDescription,
         status: status as statusType,
-        id: 0,
       });
       if (createTaskDialog.current) {
         createTaskDialog.current.close();
