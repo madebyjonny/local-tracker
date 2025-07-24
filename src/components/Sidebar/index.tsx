@@ -30,6 +30,7 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
+      <span>Clarity</span>
       <header>
         <h2>Projects</h2>
         <button onClick={showCreateProjectDialog}>Create Project</button>
