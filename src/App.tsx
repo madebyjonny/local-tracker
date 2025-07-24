@@ -1,111 +1,10 @@
 import { useRef } from "react";
 import "./main.css";
-import {
-  DndContext,
-  useDraggable,
-  useDroppable,
-  type DragEndEvent,
-} from "@dnd-kit/core";
-import Dexie, { type Table } from "dexie";
+import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { useLiveQuery } from "dexie-react-hooks";
-
-type statusType = "to-do" | "in-progress" | "in-review" | "done";
-
-export interface TaskItem {
-  id?: number;
-  columnId?: number;
-  name: string;
-  description: string;
-  status: statusType; // e.g., "todo", "in-progress", "done"
-}
-export interface TaskColumn {
-  id?: number;
-  name: string;
-  columnId: string;
-}
-
-export class TasksDB extends Dexie {
-  columns!: Table<TaskColumn, number>;
-  tasks!: Table<TaskItem, number>;
-  constructor() {
-    super("Tasks");
-    this.version(1).stores({
-      columns: "++id",
-      tasks: "++id, columnId",
-    });
-  }
-
-  deleteList(columnId: number) {
-    return this.transaction("rw", this.tasks, this.columns, () => {
-      this.tasks.where({ columnId }).delete();
-      this.columns.delete(columnId);
-    });
-  }
-}
-
-export const db = new TasksDB();
-
-function Column({
-  tasks,
-  name,
-  columnId,
-  id,
-}: TaskColumn & { tasks: TaskItem[] }) {
-  const { setNodeRef, isOver } = useDroppable({
-    id: columnId,
-  });
-
-  return (
-    <div className="column">
-      <header className="column-header">
-        <h2>{name}</h2>
-        <button onClick={() => db.columns.where({ id }).delete()}>
-          Delete
-        </button>
-      </header>
-
-      <div ref={setNodeRef} className="column-content" data-is-over={isOver}>
-        {tasks
-          .filter((task) => {
-            return task.status === columnId;
-          })
-          .map((task) => (
-            <Card
-              key={task.id}
-              id={task.id}
-              name={task.name}
-              status={task.status}
-              description={task.description}
-            />
-          ))}
-      </div>
-    </div>
-  );
-}
-
-function Card({ name, description, id = 0 }: TaskItem) {
-  const { attributes, setNodeRef, listeners, transform } = useDraggable({
-    id,
-  });
-
-  const style = {
-    transform: transform
-      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-      : undefined,
-  };
-
-  return (
-    <div
-      {...attributes}
-      ref={setNodeRef}
-      {...listeners}
-      className="card"
-      style={style}
-    >
-      {name} {description}
-    </div>
-  );
-}
+import Column from "./components/Column";
+import { db, type statusType } from "./model/db";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   //const [tasks, setTasks] = useState<TaskItem[]>(initialTasks);
@@ -143,6 +42,7 @@ function App() {
       db.columns.add({
         name: columnName,
         columnId: columnName.toLowerCase().replace(/\s+/g, "-"),
+        projectId: "website",
       });
       if (createColumnDiaglog.current) {
         createColumnDiaglog.current.close();
@@ -177,12 +77,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="sidebar">
-        <h2>Projects</h2>
-        <ul>
-          <li>Website</li>
-        </ul>
-      </div>
+      <Sidebar />
       <div className="main-content">
         <h1>Website</h1>
         <button onClick={showCreateColumnDialog}>Create Column</button>
@@ -226,6 +121,7 @@ function App() {
                 key={column.id}
                 name={column.name}
                 columnId={column.columnId}
+                projectId={column.projectId}
                 tasks={tasks ?? []}
               />
             ))}
