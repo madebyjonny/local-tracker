@@ -26,13 +26,13 @@ export interface Project {
 export class TasksDB extends Dexie {
   columns!: Table<TaskColumn, number>;
   tasks!: Table<TaskItem, number>;
-  project!: Table<Project, number>;
+  projects!: Table<Project, number>;
   constructor() {
     super("Tasks");
     this.version(1).stores({
       columns: "++id, projectId",
       tasks: "++id, columnId, projectId",
-      project: "++id, name ",
+      projects: "++id, projectId",
     });
   }
 
