@@ -4,6 +4,7 @@ import { db, type statusType } from "../../model/db";
 import { useRef } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useParams } from "react-router";
+import { FaPlus, FaRegNoteSticky } from "react-icons/fa6";
 
 function Project() {
   const createColumnDiaglog = useRef<HTMLDialogElement>(null);
@@ -83,53 +84,63 @@ function Project() {
 
   return (
     <>
-      <h1>{project.name}</h1>
-      <button onClick={showCreateColumnDialog}>Create Column</button>
-      <button onClick={showCreateTaskDialog}>create task</button>
-      <dialog ref={createTaskDialog}>
-        <form method="dialog" onSubmit={handleCreateTask}>
-          <label>
-            Task Name:
-            <input type="text" name="taskName" required />
-          </label>
-          <label>
-            Task Description:
-            <input type="text" name="taskDescription" required />
-          </label>
-          <label>
-            Status:
-            <select name="status" required>
-              <option value="to-do">To Do</option>
-              <option value="in-progress">In Progress</option>
-              <option value="done">Done</option>
-            </select>
-          </label>
-          <button type="submit">Create</button>
-        </form>
-      </dialog>
-      <dialog ref={createColumnDiaglog}>
-        <form method="dialog" onSubmit={handleCreateColumn}>
-          <label>
-            Column Name:
-            <input type="text" name="columnName" required />
-          </label>
-          <button type="submit">Create</button>
-        </form>
-      </dialog>
+      <header className="top-panel">
+        <h1>{project.name} / Project</h1>
+        <div className="controls">
+          <button onClick={showCreateColumnDialog}>
+            <FaPlus /> <span>Create Column</span>
+          </button>
+          <button onClick={showCreateTaskDialog}>
+            <FaRegNoteSticky /> <span>Create Task</span>
+          </button>
+          <dialog ref={createTaskDialog}>
+            <form method="dialog" onSubmit={handleCreateTask}>
+              <label>
+                Task Name:
+                <input type="text" name="taskName" required />
+              </label>
+              <label>
+                Task Description:
+                <input type="text" name="taskDescription" required />
+              </label>
+              <label>
+                Status:
+                <select name="status" required>
+                  <option value="to-do">To Do</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="done">Done</option>
+                </select>
+              </label>
+              <button type="submit">Create</button>
+            </form>
+          </dialog>
+          <dialog ref={createColumnDiaglog}>
+            <form method="dialog" onSubmit={handleCreateColumn}>
+              <label>
+                Column Name:
+                <input type="text" name="columnName" required />
+              </label>
+              <button type="submit">Create</button>
+            </form>
+          </dialog>
+        </div>
+      </header>
 
-      <div className="columns">
-        <DndContext onDragEnd={handleDragEnd}>
-          {columns?.map((column) => (
-            <Column
-              id={column.id}
-              key={column.id}
-              name={column.name}
-              columnId={column.columnId}
-              projectId={column.projectId}
-              tasks={tasks ?? []}
-            />
-          ))}
-        </DndContext>
+      <div className="container">
+        <div className="columns">
+          <DndContext onDragEnd={handleDragEnd}>
+            {columns?.map((column) => (
+              <Column
+                id={column.id}
+                key={column.id}
+                name={column.name}
+                columnId={column.columnId}
+                projectId={column.projectId}
+                tasks={tasks ?? []}
+              />
+            ))}
+          </DndContext>
+        </div>
       </div>
     </>
   );

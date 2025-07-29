@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { db } from "../../model/db";
 import { useLiveQuery } from "dexie-react-hooks";
+import { FaPlus, FaRegFolder } from "react-icons/fa6";
 
 function Sidebar() {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -30,28 +31,49 @@ function Sidebar() {
 
   return (
     <div className="sidebar">
-      <span>Clarity</span>
-      <header>
-        <h2>Projects</h2>
-        <button onClick={showCreateProjectDialog}>Create Project</button>
+      <div className="top-panel ">
+        <span>Clarity</span>
+      </div>
+
+      <div className="container">
+        <header>
+          <h2>Projects</h2>
+        </header>
+        <ul className="project-list">
+          {projects?.map((project) => (
+            <li key={project.id}>
+              <a href={`/${project.projectId}`}>
+                <FaRegFolder /> {project.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <button onClick={showCreateProjectDialog}>
+          <FaPlus /> Create Project
+        </button>
         <dialog ref={dialog}>
-          <form method="dialog" onSubmit={handleCreateProject}>
+          <header>
+            <h3>Create Project</h3>
+          </header>
+
+          <form
+            method="dialog"
+            onSubmit={handleCreateProject}
+            id="create-project"
+          >
             <label>
               Project Name:
               <input type="text" name="projectName" required />
             </label>
-            <button type="submit">Create</button>
           </form>
-        </dialog>
-      </header>
 
-      <ul>
-        {projects?.map((project) => (
-          <li key={project.id}>
-            <a href={`/${project.projectId}`}>{project.name}</a>
-          </li>
-        ))}
-      </ul>
+          <footer>
+            <button type="submit" form="create-project">
+              Create
+            </button>
+          </footer>
+        </dialog>
+      </div>
     </div>
   );
 }

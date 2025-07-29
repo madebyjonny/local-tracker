@@ -1,6 +1,7 @@
 import Card from "../Card";
 import { useDroppable } from "@dnd-kit/core";
 import { db, type TaskColumn, type TaskItem } from "../../model/db";
+import { FaTrashCan } from "react-icons/fa6";
 
 function Column({
   tasks,
@@ -16,8 +17,12 @@ function Column({
     <div className="column">
       <header className="column-header">
         <h2>{name}</h2>
-        <button onClick={() => db.columns.where({ id }).delete()}>
-          Delete
+        <button
+          onClick={() => db.columns.where({ id }).delete()}
+          aria-label="Delete Column"
+          className="icon"
+        >
+          <FaTrashCan />
         </button>
       </header>
 

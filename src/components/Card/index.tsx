@@ -20,7 +20,8 @@ function Card({ name, description, id = 0 }: TaskItem) {
       className="card"
       style={style}
     >
-      {name} {description}
+      <h3>{name}</h3>
+      <p>{description}</p>
     </div>
   );
 }
