@@ -85,7 +85,7 @@ function Project() {
   return (
     <>
       <header className="top-panel">
-        <h1>{project.name} / Project</h1>
+        <h1>Project / {project.name} </h1>
         <div className="controls">
           <button onClick={showCreateColumnDialog}>
             <FaPlus /> <span>Create Column</span>
