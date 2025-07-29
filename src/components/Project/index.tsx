@@ -94,25 +94,40 @@ function Project() {
             <FaRegNoteSticky /> <span>Create Task</span>
           </button>
           <dialog ref={createTaskDialog}>
-            <form method="dialog" onSubmit={handleCreateTask}>
-              <label>
-                Task Name:
-                <input type="text" name="taskName" required />
-              </label>
-              <label>
-                Task Description:
-                <input type="text" name="taskDescription" required />
-              </label>
-              <label>
-                Status:
-                <select name="status" required>
-                  <option value="to-do">To Do</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="done">Done</option>
-                </select>
-              </label>
-              <button type="submit">Create</button>
+            <header>
+              <h3>Create Task</h3>
+            </header>
+            <form
+              method="dialog"
+              onSubmit={handleCreateTask}
+              id="createTaskForm"
+            >
+              <label htmlFor="taskName">Task Name:</label>
+              <input type="text" name="taskName" required />
+              <label htmlFor="taskDescription">Task Description:</label>
+              <textarea
+                name="taskDescription"
+                placeholder="Enter task description"
+                required
+              ></textarea>
+              <label htmlFor="status">Status:</label>
+              <select name="status" required>
+                <option value="to-do">To Do</option>
+                <option value="in-progress">In Progress</option>
+                <option value="done">Done</option>
+              </select>
             </form>
+            <footer>
+              <button
+                type="button"
+                onClick={() => createTaskDialog.current?.close()}
+              >
+                Cancel
+              </button>
+              <button type="submit" form="createTaskForm" className="solid">
+                Create Task
+              </button>
+            </footer>
           </dialog>
           <dialog ref={createColumnDiaglog}>
             <form method="dialog" onSubmit={handleCreateColumn}>

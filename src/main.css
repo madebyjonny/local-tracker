@@ -94,10 +94,17 @@ h2 {
   padding: 1rem;
 }
 
-h1 {
+h1,
+h2,
+h3,
+h4 {
   font-size: 1rem;
   margin: 0;
   font-weight: normal;
+}
+
+h3 {
+  font-weight: bold;
 }
 
 .top-panel {
@@ -129,14 +136,59 @@ button {
   &.icon {
     border: none;
   }
+
+  &.solid {
+    background-color: #323232;
+    color: #fff;
+  }
 }
 
 dialog {
   border: none;
   background-color: #fff;
   border-radius: 0.5rem;
+  padding: 0;
   max-width: 500px;
   width: 90%;
+}
+
+dialog footer {
+  border-top: 1px solid #f5f4ef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+dialog header {
+  padding: 1rem;
+  border-bottom: 1px solid #f5f4ef;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.5rem;
+  border: 1px solid #dad9d9;
+  border-radius: 0.25rem;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  font: inherit;
 }
 
 .project-list {
