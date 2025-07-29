@@ -143,6 +143,7 @@ dialog {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+
   a {
     display: flex;
     align-items: center;
@@ -151,6 +152,10 @@ dialog {
     border-radius: 0.25rem;
     color: #323232;
     text-decoration: none;
+  }
+
+  a[data-active="true"] {
+    background-color: #e9e8e4;
   }
 
   a:hover {

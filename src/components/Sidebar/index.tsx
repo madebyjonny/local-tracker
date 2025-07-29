@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { db } from "../../model/db";
 import { useLiveQuery } from "dexie-react-hooks";
-import { FaPlus, FaRegFolder } from "react-icons/fa6";
+import { FaPlus, FaRegFolder, FaRegFolderOpen } from "react-icons/fa6";
 
 function Sidebar() {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -40,13 +40,19 @@ function Sidebar() {
           <h2>Projects</h2>
         </header>
         <ul className="project-list">
-          {projects?.map((project) => (
-            <li key={project.id}>
-              <a href={`/${project.projectId}`}>
-                <FaRegFolder /> {project.name}
-              </a>
-            </li>
-          ))}
+          {projects?.map((project) => {
+            const isActive = window.location.pathname.includes(
+              project.projectId
+            );
+            return (
+              <li key={project.id}>
+                <a href={`/${project.projectId}`} data-active={isActive}>
+                  {isActive ? <FaRegFolderOpen /> : <FaRegFolder />}
+                  {project.name}
+                </a>
+              </li>
+            );
+          })}
         </ul>
         <button onClick={showCreateProjectDialog}>
           <FaPlus /> Create Project
