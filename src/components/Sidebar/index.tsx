@@ -40,7 +40,11 @@ function Sidebar() {
         <header className="sidebar-header">
           <h2 className="list-title">Projects</h2>
 
-          <button onClick={showCreateProjectDialog} aria-label="Create Project">
+          <button
+            onClick={showCreateProjectDialog}
+            aria-label="Create Project"
+            className="transparent"
+          >
             <FaPlus />
           </button>
         </header>
