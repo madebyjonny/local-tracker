@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { db } from "../../model/db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { FaPlus, FaRegFolder, FaRegFolderOpen } from "react-icons/fa6";
+import Dialog from "../Dialog";
 
 function Sidebar() {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -59,28 +60,16 @@ function Sidebar() {
           })}
         </ul>
 
-        <dialog ref={dialog}>
-          <header>
-            <h3>Create Project</h3>
-          </header>
-
+        <Dialog ref={dialog} title="Create Project" buttonLabel="Create">
           <form
             method="dialog"
             onSubmit={handleCreateProject}
             id="create-project"
           >
-            <label>
-              Project Name:
-              <input type="text" name="projectName" required />
-            </label>
+            <label>Project Name</label>
+            <input type="text" name="projectName" required />
           </form>
-
-          <footer>
-            <button type="submit" form="create-project">
-              Create
-            </button>
-          </footer>
-        </dialog>
+        </Dialog>
       </div>
     </div>
   );

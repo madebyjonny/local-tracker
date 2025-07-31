@@ -81,6 +81,7 @@ h2 {
   background: #fff;
   border-radius: 0.5rem;
   padding: 1rem;
+  box-shadow: 0 3px 5px 0px #dad9d9;
 }
 
 .card h3 {
@@ -163,6 +164,28 @@ button {
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
 dialog {
   border: none;
   background-color: #fff;
@@ -170,6 +193,38 @@ dialog {
   padding: 0;
   max-width: 500px;
   width: 90%;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  transition: opacity 0.4s ease, transform 0.4s ease, bacdrop-filter 0.4s ease;
+  opacity: 0;
+}
+
+dialog::backdrop {
+  opacity: 1;
+  backdrop-filter: blur(4px);
+}
+
+dialog[open] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@starting-style {
+  dialog[open] {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  dialog::backdrop {
+    opacity: 0;
+    backdrop-filter: blur(2px);
+  }
 }
 
 dialog footer {
@@ -184,11 +239,6 @@ dialog footer {
 dialog header {
   padding: 1rem;
   border-bottom: 1px solid #f5f4ef;
-}
-
-dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
 }
 
 form {
@@ -227,16 +277,18 @@ textarea {
     gap: 0.5rem;
     border-radius: 1rem;
     min-height: 48px;
-    color: #323232;
+    color: #605d5e;
     text-decoration: none;
   }
 
   a[data-active="true"] {
     background-color: #fff;
+    box-shadow: 0 3px 5px 0px #dad9d9;
   }
 
   a:hover {
     background: #e7e5e5;
+    box-shadow: none;
   }
 }
 

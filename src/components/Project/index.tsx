@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useParams } from "react-router";
 import { FaPlus, FaRegNoteSticky } from "react-icons/fa6";
+import Dialog from "../Dialog";
 
 function Project() {
   const createColumnDiaglog = useRef<HTMLDialogElement>(null);
@@ -93,10 +94,11 @@ function Project() {
           <button onClick={showCreateTaskDialog}>
             <FaRegNoteSticky /> <span>Create Task</span>
           </button>
-          <dialog ref={createTaskDialog}>
-            <header>
-              <h3>Create Task</h3>
-            </header>
+          <Dialog
+            ref={createTaskDialog}
+            formName="createTaskForm"
+            title="Create Task"
+          >
             <form
               method="dialog"
               onSubmit={handleCreateTask}
@@ -117,27 +119,17 @@ function Project() {
                 <option value="done">Done</option>
               </select>
             </form>
-            <footer>
-              <button
-                type="button"
-                onClick={() => createTaskDialog.current?.close()}
-              >
-                Cancel
-              </button>
-              <button type="submit" form="createTaskForm" className="solid">
-                Create Task
-              </button>
-            </footer>
-          </dialog>
-          <dialog ref={createColumnDiaglog}>
+          </Dialog>
+          <Dialog
+            ref={createColumnDiaglog}
+            title="Add Column"
+            buttonLabel="Add"
+          >
             <form method="dialog" onSubmit={handleCreateColumn}>
-              <label>
-                Column Name:
-                <input type="text" name="columnName" required />
-              </label>
-              <button type="submit">Create</button>
+              <label>Column Name</label>
+              <input type="text" name="columnName" required />
             </form>
-          </dialog>
+          </Dialog>
         </div>
       </header>
 
