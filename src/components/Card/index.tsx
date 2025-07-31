@@ -11,9 +11,7 @@ function Card({ name, description, id = 0 }: TaskItem) {
   });
 
   const style = {
-    transform: transform
-      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-      : undefined,
+    transform: `translate3d(${transform?.x || 0}px, ${transform?.y || 0}px, 0)`,
   };
 
   return (

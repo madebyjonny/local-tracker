@@ -4,7 +4,7 @@ import { db, type statusType } from "../../model/db";
 import { useRef } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useParams } from "react-router";
-import { FaPlus, FaRegNoteSticky } from "react-icons/fa6";
+import { FaPlus, FaRegNoteSticky, FaTrashCan } from "react-icons/fa6";
 import Dialog from "../Dialog";
 
 function Project() {
@@ -93,6 +93,14 @@ function Project() {
           </button>
           <button onClick={showCreateTaskDialog}>
             <FaRegNoteSticky /> <span>Create Task</span>
+          </button>
+          <button
+            onClick={() =>
+              confirm("are you sure?") &&
+              db.projects.where({ projectId }).delete()
+            }
+          >
+            <FaTrashCan /> <span>Delete Project</span>
           </button>
           <Dialog
             ref={createTaskDialog}
