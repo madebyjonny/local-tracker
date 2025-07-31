@@ -35,9 +35,13 @@ function Sidebar() {
         <span>Clarity</span>
       </div>
 
-      <div className="container">
-        <header>
-          <h2>Projects</h2>
+      <div className="container side-bar-content">
+        <header className="sidebar-header">
+          <h2 className="list-title">Projects</h2>
+
+          <button onClick={showCreateProjectDialog} aria-label="Create Project">
+            <FaPlus />
+          </button>
         </header>
         <ul className="project-list">
           {projects?.map((project) => {
@@ -54,9 +58,7 @@ function Sidebar() {
             );
           })}
         </ul>
-        <button onClick={showCreateProjectDialog}>
-          <FaPlus /> Create Project
-        </button>
+
         <dialog ref={dialog}>
           <header>
             <h3>Create Project</h3>
